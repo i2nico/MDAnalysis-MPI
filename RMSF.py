@@ -26,8 +26,6 @@ os.environ["OMP_NUM_THREADS"] = "1"
 
 import MDAnalysis as mda
 from MDAnalysis.analysis import rms, base
-import matplotlib.pyplot as plt
-from matplotlib import cm
 from mpi4py import MPI
 import numpy as np
 from itertools import chain
