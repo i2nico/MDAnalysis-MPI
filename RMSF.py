@@ -5,7 +5,7 @@ import MDAnalysis as mda
 from MDAnalysis.analysis import rms, align
 from MDAnalysis.tests.datafiles import GRO, XTC, TPR
 
-u = mda.Universe(GRO, XTC)
+u = mda.Universe(TPR, XTC)
 average = align.AverageStructure(u, u, select='protein and name CA', ref_frame=0, verbose = True).run()
 ref = average.results.universe
 
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     S = [stop - start, mean, sumsquares]
     comm.Barrier()
-    MPI.Op.Create(second_order_moments, commute=True)
+    MPI.Op.Create(second_order_moments, commute = True)
     Data = comm.reduce(S, root = 0, op = second_order_moments)    
  
     if rank == 0:
