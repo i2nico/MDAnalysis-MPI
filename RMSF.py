@@ -106,13 +106,13 @@ if __name__ == '__main__':
 
     comm.Barrier()
 
-    #calculate RMSF
     positions = np.zeros(universe.atoms.n_atoms * 3)
     comm.Allreduce(sendbuf = pos, recvbuf = positions, op = MPI.SUM)
     positions = positions / float(n_frames)
     
     reference = mda.Universe(GRO, positions.reshape((1, -1, 3)))
     
+    #calculate RMSF
     ref_atoms = reference.select_atoms("protein and name CA")
     ref_com = ref_atoms.center_of_mass().astype(np.float64)
     ref_coordinates = ref_atoms.positions.astype(np.float64) - ref_com
