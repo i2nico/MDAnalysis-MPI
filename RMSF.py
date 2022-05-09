@@ -139,13 +139,11 @@ if __name__ == '__main__':
 
     S = [stop - start, mean, sumsquares]
     comm.Barrier()
-    GLOBAL = comm.gather(S, root = 0)    
+    MPI.Op.Create(second_order_moments, commute=True)
+    Data = comm.reduce(S, root = 0, op = second_order_moments)    
  
     if rank == 0:
-        Data = functools.reduce(second_order_moments, GLOBAL)
         RMSF = np.sqrt(Data[2].sum(axis = 1) / Data[0])
         #Do something with RMSF
-    else: 
-        pass
     
     exit(0)
